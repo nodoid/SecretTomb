@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Microsoft Store package manifest. Identity and publisher are the ones reserved in Partner
-     Center; tools/build_windows.sh fills in the version and architecture. -->
+<!-- Microsoft Store package manifest. Identity, publisher and display name ("Secret Tomb") are the
+     ones reserved in Partner Center; tools/build_windows.sh fills in the version and architecture. -->
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
@@ -13,7 +13,7 @@
             ProcessorArchitecture="$(ARCH)" />
 
   <Properties>
-    <DisplayName>The Secret of the Tomb</DisplayName>
+    <DisplayName>Secret Tomb</DisplayName>
     <PublisherDisplayName>all-the-johnsons</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
     <Description>The Secret of the Tomb (Le Secret du Tombeau): an archaeologist's adventure in an Aztec pyramid. By PFJ, based on the 1985 Loriciels game.</Description>
@@ -31,7 +31,7 @@
   <Applications>
     <Application Id="SecretTomb" Executable="SecretTomb.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
-        DisplayName="The Secret of the Tomb"
+        DisplayName="Secret Tomb"
         Description="The Secret of the Tomb (Le Secret du Tombeau): an archaeologist's adventure in an Aztec pyramid. By PFJ, based on the 1985 Loriciels game."
         BackgroundColor="#000000"
         Square150x150Logo="Assets\Square150x150Logo.png"
@@ -39,7 +39,7 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"
                          Square71x71Logo="Assets\Square71x71Logo.png"
                          Square310x310Logo="Assets\Square310x310Logo.png"
-                         ShortName="Secret of the Tomb">
+                         ShortName="Secret Tomb">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
           </uap:ShowNameOnTiles>

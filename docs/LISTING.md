@@ -19,7 +19,7 @@ Everything to paste into App Store Connect (iOS and Mac), Google Play Console an
 | Bundle ID (iOS, macOS) | `uk.co.allthejohnsons.secrettomb` |
 | Package name (Android) | `uk.co.allthejohnsons.secrettomb` |
 | Android upload key | `~/keys/secrettomb-upload.jks`, alias `secrettomb`, password in Keychain ("SecretTomb Android upload keystore"); SHA-256 `67:93:C8:E2:EE:28:AD:1B:4C:81:D9:78:47:E1:BF:D6:CB:57:13:A1:6C:A8:69:4C:D2:EA:EF:ED:C7:16:3D:1A` |
-| Windows package identity | `49556nodoid.SecretTomb`, publisher `CN=A6EAEB04-6634-41C1-BDFE-695819ECE444` |
+| Windows package identity | `49556nodoid.SecretTomb`, display name "Secret Tomb" (the name reserved in Partner Center), publisher `CN=A6EAEB04-6634-41C1-BDFE-695819ECE444` |
 | Provisioning profiles | iOS `rel-secrettomb` (App Store), `devel-secrettomb`; macOS `rel-secrettomb-mac` (App Store), `devel-secrettomb-mac` |
 | Developer / seller | Paul F. Johnson |
 | Category | Games, then Adventure (secondary: Action) |
@@ -325,11 +325,13 @@ Par PFJ, d'après le jeu Loriciels de 1985 d'Yves Petitjean et Serge Schruder.
 
 Partner Center asks for more than the other stores. Everything below is needed for every submission.
 
+> The product name must be a name reserved in Partner Center: **Secret Tomb** (identity `49556nodoid.SecretTomb`). It is used for the package display name and for the listing in both languages. To show "The Secret of the Tomb" or "Le Secret du Tombeau" instead, reserve that name first (Product management › Manage product names), then change it here and in `SecretTomb.WindowsDX/Windows/AppxManifest.xml`.
+
 ### English
 
 **Product name** (256 max)
 ```
-The Secret of the Tomb
+Secret Tomb
 ```
 
 **Short description** (1000 max)
@@ -387,7 +389,7 @@ No account, sign-in, network connection or purchase is needed; all content is av
 
 **Nom du produit** (256 max)
 ```
-Le Secret du Tombeau
+Secret Tomb
 ```
 
 **Description courte** (1000 max)

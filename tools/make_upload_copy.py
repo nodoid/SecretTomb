@@ -172,7 +172,7 @@ def main():
         for label, (_, limit, body) in zip(ms_labels, ms[key]):
             per_box = 'one per box' in label
             t += field(label, 200 if label.startswith('Product features') else 30 if per_box else limit, body, per_line=per_box)
-        t += field('Short title', 50, 'Secret of the Tomb' if lang == 'en' else 'Secret du Tombeau')
+        t += field('Short title', 50, 'Secret Tomb')
         t += files([
             f'Screenshots (10): {d}/microsoft-store/screenshots-3840x2160/ (or 1920x1080 / 1366x768)',
             f'16:9 Super hero art (no text): {d}/microsoft-store/super-hero-art-3840x2160.png (also 1920x1080)',
