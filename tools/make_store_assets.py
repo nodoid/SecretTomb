@@ -199,10 +199,11 @@ def stills(cap):
         windows = os.path.join(cap, lang, 'windows', 'stills')
         out = os.path.join(STORE, lang)
 
-        # Apple App Store (iOS): landscape iPhone 6.9" and 6.5", iPad 13".
+        # Apple App Store (iOS), landscape. Required: iPhone 6.3" (Dynamic Island, medium display) and
+        # iPad 13". The 6.9" (Dynamic Island, large display) set is optional but sharper on the big phones.
         a = os.path.join(out, 'app-store')
         screenshots(mobile, os.path.join(a, 'iphone-6.9in-2868x1320'), 2868, 1320)
-        screenshots(mobile, os.path.join(a, 'iphone-6.5in-2688x1242'), 2688, 1242)
+        screenshots(mobile, os.path.join(a, 'iphone-6.3in-2622x1206'), 2622, 1206)
         screenshots(mobile, os.path.join(a, 'ipad-13in-2752x2064'), 2752, 2064)
         icon.save(os.path.join(a, 'icon-1024.png'))
 
@@ -264,7 +265,8 @@ def montage(video_root, tmp):
 
 
 def encode(frames, wav, out, w, h):
-    """H.264 / AAC at 30 fps, as App Store Connect wants; blurred fill around the screen."""
+    """H.264 (High profile, level 4.0, 11 Mbps: Apple's target is 10-12 Mbps) and stereo 256 kbps AAC at
+    30 fps, as App Store Connect wants; blurred fill around the screen."""
     os.makedirs(os.path.dirname(out), exist_ok=True)
     vf = (f'[0:v]split[a][b];'
           f'[a]scale={w // 8}:{h // 8}:force_original_aspect_ratio=increase,crop={w // 8}:{h // 8},boxblur=6:2,'
@@ -273,7 +275,8 @@ def encode(frames, wav, out, w, h):
           f'[bg][fg]overlay=(W-w)/2:(H-h)/2,fps=30,format=yuv420p[v]')
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-framerate', '50', '-i', os.path.join(frames, '%05d.png'),
                     '-i', wav, '-filter_complex', vf, '-map', '[v]', '-map', '1:a',
-                    '-c:v', 'libx264', '-profile:v', 'high', '-level', '4.0', '-crf', '17', '-preset', 'slow',
+                    '-c:v', 'libx264', '-profile:v', 'high', '-level', '4.0', '-b:v', '11M', '-minrate', '11M', '-maxrate', '11M', '-bufsize', '22M',
+                    '-x264-params', 'nal-hrd=cbr', '-preset', 'slow',
                     '-c:a', 'aac', '-b:a', '256k', '-ar', '44100', '-ac', '2',
                     '-movflags', '+faststart', '-shortest', out], check=True)
     print('video', os.path.relpath(out, ROOT))

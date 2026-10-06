@@ -94,10 +94,10 @@ def main():
         for label, (_, limit, body) in zip(labels_ios, fields):
             t += field(label, limit, body)
         t += files([
-            f'iPhone 6.9" screenshots (10): {d}/app-store/iphone-6.9in-2868x1320/',
-            f'iPhone 6.5" screenshots (10, if asked): {d}/app-store/iphone-6.5in-2688x1242/',
-            f'iPad 13" screenshots (10): {d}/app-store/ipad-13in-2752x2064/',
-            f'iPhone app preview: {d}/app-store/app-preview-iphone-1920x886.mp4 (poster frame: about 0:12)',
+            f'iPhone 6.3" screenshots (10, REQUIRED): {d}/app-store/iphone-6.3in-2622x1206/',
+            f'iPhone 6.9" screenshots (10, optional): {d}/app-store/iphone-6.9in-2868x1320/',
+            f'iPad 13" screenshots (10, REQUIRED): {d}/app-store/ipad-13in-2752x2064/',
+            f'iPhone app preview: {d}/app-store/app-preview-iphone-1920x886.mp4 (set the poster frame to about 0:12; the default is 0:05)',
             f'iPad app preview: {d}/app-store/app-preview-ipad-1600x1200.mp4',
             'App icon: comes from the build (stores/en/app-store/icon-1024.png is the same picture)',
             'Build: release/ios/SecretTomb.ipa (upload with Transporter; version 1.0.0, build 1)',

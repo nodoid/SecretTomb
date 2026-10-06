@@ -164,8 +164,8 @@ Par PFJ, d'après le jeu Loriciels de 1985 d'Yves Petitjean et Serge Schruder.
 Première version.
 ```
 
-**Screenshots:** `stores/<en|fr>/app-store/iphone-6.9in-2868x1320/` (also `iphone-6.5in-2688x1242/`) and `ipad-13in-2752x2064/`, 10 each, landscape.
-**App previews:** `stores/<en|fr>/app-store/app-preview-iphone-1920x886.mp4` (iPhone 6.9") and `app-preview-ipad-1600x1200.mp4` (iPad 13"), 28 s, H.264 30 fps with stereo AAC. Copies are in `~/Movies/The Secret of the Tomb/`.
+**Screenshots** (10 each, landscape): `stores/<en|fr>/app-store/iphone-6.3in-2622x1206/` (iPhone with Dynamic Island, medium display: **required**), `ipad-13in-2752x2064/` (iPad 13": **required**) and `iphone-6.9in-2868x1320/` (iPhone with Dynamic Island, large display: optional, otherwise scaled from the 6.5" Face ID size).
+**App previews:** `stores/<en|fr>/app-store/app-preview-iphone-1920x886.mp4` (iPhone 6.9") and `app-preview-ipad-1600x1200.mp4` (iPad 13"), 28 s, H.264 at 11 Mbps (Apple's target is 10-12 Mbps), 30 fps, stereo 256 kbps AAC. Copies are in `~/Movies/The Secret of the Tomb/`.
 **Icon:** `stores/en/app-store/icon-1024.png`.
 
 ---
@@ -226,7 +226,7 @@ En français et en anglais. Sans publicité, sans pistage et sans connexion Inte
 Par PFJ, d'après le jeu Loriciels de 1985 d'Yves Petitjean et Serge Schruder.
 ```
 
-**Screenshots:** `stores/<en|fr>/mac-app-store/screenshots-2880x1800/` (or `screenshots-1440x900/`), 10.
+**Screenshots:** `stores/<en|fr>/mac-app-store/screenshots-2880x1800/` (or `screenshots-1440x900/`; Apple accepts 1280x800, 1440x900, 2560x1600 or 2880x1800), 10.
 **App preview:** `stores/<en|fr>/mac-app-store/app-preview-1920x1080.mp4`, 28 s. Copies are in `~/Movies/The Secret of the Tomb/`.
 
 ---
