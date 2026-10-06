@@ -100,7 +100,7 @@ def main():
             f'iPhone app preview: {d}/app-store/app-preview-iphone-1920x886.mp4 (set the poster frame to about 0:12; the default is 0:05)',
             f'iPad app preview: {d}/app-store/app-preview-ipad-1600x1200.mp4',
             'App icon: comes from the build (stores/en/app-store/icon-1024.png is the same picture)',
-            'Build: release/ios/SecretTomb.ipa (upload with Transporter; version 1.0.0, build 1)',
+            'Build: releases/ios/SecretTomb.ipa (upload with Transporter; version 1.0.0, build 1)',
         ])
         if lang == 'en':
             t += answers(app_info)
@@ -122,7 +122,7 @@ def main():
         t += files([
             f'Screenshots (10): {d}/mac-app-store/screenshots-2880x1800/ (or screenshots-1440x900/)',
             f'App preview: {d}/mac-app-store/app-preview-1920x1080.mp4',
-            'Build: release/macos/SecretTomb.pkg (upload with Transporter; version 1.0.0, build 1)',
+            'Build: releases/macos/SecretTomb.pkg (upload with Transporter; version 1.0.0, build 1)',
         ])
         if lang == 'en':
             t += answers([r for r in app_info if r[0] != 'Age rating'] +
