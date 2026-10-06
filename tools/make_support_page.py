@@ -49,8 +49,7 @@ def main():
 <tr><td>Open, close, read, pull, search</td><td><kbd>E</kbd> or <kbd>Enter</kbd></td><td>The green hand button</td></tr>
 <tr><td>Pause / menu</td><td><kbd>P</kbd> / <kbd>Esc</kbd></td><td>The pause button / Back</td></tr>
 <tr><td>Full screen</td><td><kbd>F11</kbd> or <kbd>Alt</kbd>+<kbd>Enter</kbd></td><td>Always</td></tr>
-</tbody></table>
-<p>Game controllers work too: the left stick walks, A fires, B jumps, X opens, and the right stick fires in any of the four directions.</p>'''),
+</tbody></table>'''),
         ('tomb', 'The tomb', '''<ul>
 <li><strong>Ghouls</strong> rush at you, often in groups, and their touch is deadly: shoot them. Their bones stay where they fall, and other monsters will not cross bones, or stairs.</li>
 <li><strong>Iron guardians</strong> cannot be harmed by the laser. The only answer is to run.</li>
@@ -67,8 +66,7 @@ def main():
 <h3>I can't read the inscriptions.</h3><p>Read the great inscription near the entrance first. It is written in the old script with a translation underneath.</p>
 <h3>I keep drowning.</h3><p>You can only hold your breath for a few seconds. Somewhere in the flooded galleries there is a way to breathe under water.</p>
 <h3>How do I change the language?</h3><p>Tap or click <em>English</em> or <em>Français</em> on the title screen, or choose <em>Language</em> on the menu. The first time, the game follows your device's language.</p>
-<h3>Where are my scores kept?</h3><p>On your device, in the game's own storage, so they are still there the next time you play. Uninstalling the game deletes them.</p>
-<h3>Can I play with a controller?</h3><p>Yes, on Mac, Windows, iPad, iPhone and Android, with any controller the system recognises.</p>'''),
+<h3>Where are my scores kept?</h3><p>On your device, in the game's own storage, so they are still there the next time you play. Uninstalling the game deletes them.</p>'''),
         ('privacy', 'Privacy', '''<p><strong>The Secret of the Tomb collects nothing.</strong> It has no accounts, advertising, analytics or tracking, and it never connects to the internet. It doesn't collect, store, share or sell any personal information, from anyone, including children.</p>
 <p>The game keeps two small files in its private storage on your device: the Hall of Fame (the names you enter, with your scores) and your settings (language, volume and difficulty). They never leave your device and are deleted when you uninstall the game.</p>
 <p>If this policy changes, the new version will be posted here with a new date. Last updated: 6 October 2026.</p>'''),

@@ -9,7 +9,7 @@ using SecretTomb.Core.World;
 namespace SecretTomb.Core.Input;
 
 /// <summary>
-/// Gathers keyboard, mouse, touch and game pad into a single per-frame view used by every scene.
+/// Gathers keyboard, mouse and touch into a single per-frame view used by every scene.
 /// Taps and clicks are reported in virtual (Oric) pixels. During play on a phone or tablet the
 /// touches drive the on-screen stick and buttons (<see cref="TouchControls"/>).
 /// </summary>
@@ -18,7 +18,7 @@ public sealed class InputManager
     private readonly bool _isMobile;
     private KeyboardState _prevKeys;
     private MouseState _prevMouse;
-    private GamePadState _prevPad;
+    private bool _prevBack;
     private readonly List<Vector2> _taps = new();
     private readonly List<char> _typed = new();
 
@@ -68,10 +68,10 @@ public sealed class InputManager
         _typed.Clear();
 
         var keys = Keyboard.GetState();
-        var pad = GamePad.GetState(PlayerIndex.One);
+        // Android reports its Back button as a game pad Back button; nothing else is read from pads.
+        bool back = GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Back);
         bool Down(Keys k) => isActive && keys.IsKeyDown(k);
         bool Hit(Keys k) => isActive && keys.IsKeyDown(k) && !_prevKeys.IsKeyDown(k);
-        bool PadHit(Buttons b) => pad.IsButtonDown(b) && !_prevPad.IsButtonDown(b);
 
         // --- walking ---
         float mx = 0, my = 0;
@@ -79,25 +79,15 @@ public sealed class InputManager
         if (Down(Keys.Right) || Down(Keys.D)) mx += 1;
         if (Down(Keys.Up) || Down(Keys.W)) my -= 1;
         if (Down(Keys.Down) || Down(Keys.S)) my += 1;
-        var stick = pad.ThumbSticks.Left;
-        if (stick.Length() > 0.25f)
-        {
-            mx = stick.X;
-            my = -stick.Y;
-        }
-        if (pad.IsButtonDown(Buttons.DPadLeft)) mx = -1;
-        if (pad.IsButtonDown(Buttons.DPadRight)) mx = 1;
-        if (pad.IsButtonDown(Buttons.DPadUp)) my = -1;
-        if (pad.IsButtonDown(Buttons.DPadDown)) my = 1;
 
         // --- menus ---
-        LeftPressed = Hit(Keys.Left) || PadHit(Buttons.DPadLeft) || PadHit(Buttons.LeftThumbstickLeft);
-        RightPressed = Hit(Keys.Right) || PadHit(Buttons.DPadRight) || PadHit(Buttons.LeftThumbstickRight);
-        UpPressed = Hit(Keys.Up) || PadHit(Buttons.DPadUp) || PadHit(Buttons.LeftThumbstickUp);
-        DownPressed = Hit(Keys.Down) || PadHit(Buttons.DPadDown) || PadHit(Buttons.LeftThumbstickDown);
-        ConfirmPressed = Hit(Keys.Space) || Hit(Keys.Enter) || PadHit(Buttons.A) || PadHit(Buttons.Start);
-        BackPressed = Hit(Keys.Escape) || PadHit(Buttons.Back);
-        PausePressed = Hit(Keys.P) || PadHit(Buttons.Start);
+        LeftPressed = Hit(Keys.Left);
+        RightPressed = Hit(Keys.Right);
+        UpPressed = Hit(Keys.Up);
+        DownPressed = Hit(Keys.Down);
+        ConfirmPressed = Hit(Keys.Space) || Hit(Keys.Enter);
+        BackPressed = Hit(Keys.Escape) || (back && !_prevBack);
+        PausePressed = Hit(Keys.P);
         LanguagePressed = Hit(Keys.L);
         VolumePressed = Hit(Keys.V);
         InstructionsPressed = Hit(Keys.I);
@@ -105,19 +95,14 @@ public sealed class InputManager
         // --- play: fire, aim, jump, action ---
         var c = new Controls
         {
-            Fire = Down(Keys.Space) || Down(Keys.LeftControl) || Down(Keys.RightControl) || pad.IsButtonDown(Buttons.A) ||
-                   pad.IsButtonDown(Buttons.RightTrigger),
-            Jump = Down(Keys.X) || Down(Keys.LeftShift) || Down(Keys.RightShift) || pad.IsButtonDown(Buttons.B),
-            Action = Down(Keys.E) || Down(Keys.Enter) || Down(Keys.C) || pad.IsButtonDown(Buttons.X) || pad.IsButtonDown(Buttons.Y),
+            Fire = Down(Keys.Space) || Down(Keys.LeftControl) || Down(Keys.RightControl),
+            Jump = Down(Keys.X) || Down(Keys.LeftShift) || Down(Keys.RightShift),
+            Action = Down(Keys.E) || Down(Keys.Enter) || Down(Keys.C),
         };
         if (Hit(Keys.I)) c.Aim = Dir.Up;
         else if (Hit(Keys.K)) c.Aim = Dir.Down;
         else if (Hit(Keys.J)) c.Aim = Dir.Left;
         else if (Hit(Keys.L)) c.Aim = Dir.Right;
-        var right = pad.ThumbSticks.Right;
-        var prevRight = _prevPad.ThumbSticks.Right;
-        if (right.Length() > 0.6f && prevRight.Length() <= 0.6f)
-            c.Aim = MathF.Abs(right.X) > MathF.Abs(right.Y) ? (right.X > 0 ? Dir.Right : Dir.Left) : (right.Y > 0 ? Dir.Up : Dir.Down);
 
         // --- mouse (desktop only) ---
         Pointer = null;
@@ -183,6 +168,6 @@ public sealed class InputManager
         }
 
         _prevKeys = keys;
-        _prevPad = pad;
+        _prevBack = back;
     }
 }

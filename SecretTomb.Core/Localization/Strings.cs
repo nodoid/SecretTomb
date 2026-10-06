@@ -338,8 +338,6 @@ public static class Strings
                 ("P", "PAUSE"),
                 ("ÉCHAP", "MENU"),
                 ("F11", "PLEIN ÉCRAN"),
-                ("MANETTE", "A TIRE, B SAUTE"),
-                ("", "X OUVRE"),
             ]
             :
             [
@@ -351,7 +349,5 @@ public static class Strings
                 ("P", "PAUSE"),
                 ("ESC", "MENU"),
                 ("F11", "FULL SCREEN"),
-                ("CONTROLLER", "A FIRES, B JUMPS"),
-                ("", "X OPENS"),
             ];
 }

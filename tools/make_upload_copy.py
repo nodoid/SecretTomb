@@ -197,7 +197,7 @@ def main():
                 ('Privacy policy URL', PRIVACY),
                 ('Website', SUPPORT),
                 ('Support contact', 'paul@all-the-johnsons.co.uk'),
-                ('Input', 'Keyboard, mouse and game controller'),
+                ('Input', 'Keyboard and mouse'),
                 ('Display', 'Windowed and full screen; landscape'),
                 ('Languages', 'en-gb and fr-fr (as declared in the package manifest)'),
             ])

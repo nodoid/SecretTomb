@@ -82,7 +82,7 @@ BEWARE
 - Ammunition is scarce, and the laser destroys treasure chests too
 
 PLAY YOUR WAY
-- On-screen stick and buttons, or a game controller
+- On-screen stick and buttons
 - Easy, Normal or Hard (one life, as in the original)
 - Sun stones remember your progress
 - Play in English or French: switch on the title screen
@@ -145,7 +145,7 @@ ATTENTION
 - Les munitions sont rares, et le laser détruit aussi les coffres
 
 JOUEZ À VOTRE FAÇON
-- Manche et boutons à l'écran, ou manette
+- Manche et boutons à l'écran
 - Facile, Normal ou Difficile (une seule vie, comme dans l'original)
 - Les pierres du soleil gardent votre progression
 - Jouez en français ou en anglais : choisissez sur l'écran titre
@@ -190,7 +190,7 @@ EXPLORE THE TOMB
 - Easy, Normal or Hard (one life, as in the original)
 
 CONTROLS
-Keyboard: cursor keys or WASD to walk, SPACE to fire, I J K L to fire up, left, down or right, X to jump or ride the mine cart, E to open, read or search, P to pause, F11 for full screen. Game controllers work too.
+Keyboard: cursor keys or WASD to walk, SPACE to fire, I J K L to fire up, left, down or right, X to jump or ride the mine cart, E to open, read or search, P to pause, F11 for full screen.
 
 HIGH RESOLUTION
 Carved stone, rippling water, torchlight and smooth scrolling at the full resolution of your display, in a resizable window or full screen.
@@ -216,7 +216,7 @@ EXPLOREZ LE TOMBEAU
 - Facile, Normal ou Difficile (une seule vie, comme dans l'original)
 
 COMMANDES
-Clavier : flèches ou WASD pour marcher, ESPACE pour tirer, I J K L pour tirer en haut, à gauche, en bas ou à droite, X pour sauter ou monter dans le chariot, E pour ouvrir, lire ou fouiller, P pour la pause, F11 pour le plein écran. Les manettes fonctionnent aussi.
+Clavier : flèches ou WASD pour marcher, ESPACE pour tirer, I J K L pour tirer en haut, à gauche, en bas ou à droite, X pour sauter ou monter dans le chariot, E pour ouvrir, lire ou fouiller, P pour la pause, F11 pour le plein écran.
 
 HAUTE RÉSOLUTION
 Pierre sculptée, eau ondulante, lueur des torches et défilement fluide à la pleine résolution de votre écran, en fenêtre redimensionnable ou en plein écran.
@@ -264,7 +264,7 @@ BEWARE
 • Scarce ammunition, and a laser that destroys treasure chests too
 
 PLAY
-• On-screen stick and buttons, or a game controller
+• On-screen stick and buttons
 • Easy, Normal or Hard (one life, as in the original)
 • English and French: switch on the title screen
 • Hall of Fame, kept on your device
@@ -305,7 +305,7 @@ ATTENTION
 • Des munitions rares, et un laser qui détruit aussi les coffres
 
 JOUEZ
-• Manche et boutons à l'écran, ou manette
+• Manche et boutons à l'écran
 • Facile, Normal ou Difficile (une seule vie, comme dans l'original)
 • Français et anglais : choisissez sur l'écran titre
 • Tableau d'honneur, conservé sur votre appareil
@@ -343,7 +343,7 @@ Deep in the Mexican jungle, after days of walking, you finally see it: the pyram
 
 The Secret of the Tomb is a new, high-resolution remake of Le Secret du Tombeau, the 1985 Oric adventure by Yves Petitjean and Serge Schruder. As in the original, the tomb scrolls in every direction around you: halls of pillars, flooded galleries, a chasm crossed by mine cart, secret doors, an ancient script to decipher, ghouls to shoot and iron guardians to flee.
 
-Keyboard: cursor keys or WASD to walk, SPACE to fire, I J K L to fire up, left, down or right, X to jump or ride the mine cart, E to open, read or search, P to pause, F11 for full screen. Game controllers work too.
+Keyboard: cursor keys or WASD to walk, SPACE to fire, I J K L to fire up, left, down or right, X to jump or ride the mine cart, E to open, read or search, P to pause, F11 for full screen.
 
 Easy, Normal or Hard (one life, as in the original). In English and French. No ads, no tracking and no internet connection needed.
 
@@ -360,7 +360,6 @@ A mine cart, a teleporter and a lever
 Easy, Normal or Hard (one life, as in the original)
 High-resolution graphics in a window or full screen
 English and French
-Keyboard or game controller
 ```
 
 **Search terms** (7 max, 30 characters each)
@@ -402,7 +401,7 @@ En pleine forêt mexicaine, après des jours de marche, vous l'apercevez enfin :
 
 Le Secret du Tombeau est un remake en haute résolution du jeu d'aventure Oric de 1985 d'Yves Petitjean et Serge Schruder. Comme dans l'original, le tombeau défile dans toutes les directions autour de vous : salle des piliers, galeries inondées, gouffre traversé en chariot, portes secrètes, écriture ancienne à déchiffrer, goules à abattre et gardiens de fer à fuir.
 
-Clavier : flèches ou WASD pour marcher, ESPACE pour tirer, I J K L pour tirer en haut, à gauche, en bas ou à droite, X pour sauter ou monter dans le chariot, E pour ouvrir, lire ou fouiller, P pour la pause, F11 pour le plein écran. Les manettes fonctionnent aussi.
+Clavier : flèches ou WASD pour marcher, ESPACE pour tirer, I J K L pour tirer en haut, à gauche, en bas ou à droite, X pour sauter ou monter dans le chariot, E pour ouvrir, lire ou fouiller, P pour la pause, F11 pour le plein écran.
 
 Facile, Normal ou Difficile (une seule vie, comme dans l'original). En français et en anglais. Sans publicité, sans pistage et sans connexion Internet.
 
@@ -419,7 +418,6 @@ Un chariot, un téléporteur et un levier
 Facile, Normal ou Difficile (une seule vie, comme dans l'original)
 Graphismes haute résolution, en fenêtre ou en plein écran
 Français et anglais
-Clavier ou manette
 ```
 
 **Termes de recherche** (7 max, 30 characters each)
@@ -465,7 +463,7 @@ All of them are built from the game's own artwork by `tools/make_store_assets.py
 
 The package declares one restricted capability, `runFullTrust` (in `SecretTomb.WindowsDX/Windows/AppxManifest.xml`). No other restricted or general capabilities are declared: not `internetClient`, file system access, webcam, microphone or location. Paste:
 ```
-runFullTrust: The Secret of the Tomb is a packaged desktop (Win32) game, built with .NET 10 and MonoGame and rendered with DirectX 11. Every packaged Win32 desktop app needs runFullTrust to start its executable (Windows.FullTrustApplication entry point). The game uses it only to run its own process. It does not use the internet, other apps or processes, the user's documents or system settings. It reads the keyboard, mouse and game controllers, draws with DirectX, plays sound with XAudio, and saves its high scores and settings in its own app data folder.
+runFullTrust: The Secret of the Tomb is a packaged desktop (Win32) game, built with .NET 10 and MonoGame and rendered with DirectX 11. Every packaged Win32 desktop app needs runFullTrust to start its executable (Windows.FullTrustApplication entry point). The game uses it only to run its own process. It does not use the internet, other apps or processes, the user's documents or system settings. It reads the keyboard and mouse, draws with DirectX, plays sound with XAudio, and saves its high scores and settings in its own app data folder.
 ```
 
 **Other Partner Center answers**
@@ -475,7 +473,7 @@ runFullTrust: The Secret of the Tomb is a packaged desktop (Win32) game, built w
 | Category | Games › Adventure |
 | Pricing | Free |
 | Age ratings | IARC questionnaire: same answers as Google Play (mild fantasy violence and horror; no blood, gambling or user interaction) |
-| Input | Keyboard and game controller (Xbox controller supported) |
+| Input | Keyboard and mouse |
 | Display modes | Windowed and full screen; landscape |
 | Privacy policy URL | The support page's `#privacy` section |
 | Support contact | paul@all-the-johnsons.co.uk |

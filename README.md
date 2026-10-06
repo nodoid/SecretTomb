@@ -72,8 +72,6 @@ Identifiers:
 | Pause / menu | `P` / `Esc` | Pause button / Back |
 | Language / volume | `L` / `V` (title and menu) | Title screen / menu |
 
-Game controllers: left stick walks, A fires, B jumps, X opens, right stick fires in four directions.
-
 ## Build and run
 
 ```sh
