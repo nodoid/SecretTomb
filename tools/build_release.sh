@@ -21,7 +21,7 @@ for f in relsecrettomb develsecrettomb; do
   done
 done
 
-rm -rf releasess/ios
+rm -rf releases/ios
 dotnet publish SecretTomb.iOS/SecretTomb.iOS.csproj -c Release -f net10.0-ios -o releases/ios
 if [[ ${1:-} == ios ]]; then
   ls -la releases/ios/*.ipa
@@ -31,14 +31,14 @@ fi
 export SECRETTOMB_KEYSTORE_PASS="$(security find-generic-password -a secrettomb-upload -s 'SecretTomb Android upload keystore' -w)"
 SDK="${ANDROID_HOME:-$HOME/Library/Android/sdk}"
 
-rm -rf releasess/android
+rm -rf releases/android
 for format in aab apk; do
   dotnet publish SecretTomb.Android/SecretTomb.Android.csproj -c Release -f net10.0-android \
     -p:AndroidPackageFormat=$format -p:AndroidSdkDirectory="$SDK" -o releases/android/$format
 done
 mkdir -p releases/android/out
 mv releases/android/aab/*-Signed.aab releases/android/apk/*-Signed.apk releases/android/out/
-rm -rf releasess/android/aab releases/android/apk
+rm -rf releases/android/aab releases/android/apk
 mv releases/android/out/* releases/android/ && rmdir releases/android/out
 
 ls -la releases/android releases/ios/*.ipa
