@@ -1,0 +1,210 @@
+#!/usr/bin/env python3
+"""Writes paste-ready upload sheets for every store and language from docs/LISTING.md.
+
+    python3 tools/make_upload_copy.py
+
+Creates stores/<en|fr>/<store>/UPLOAD.txt: each field in the order the store's console asks for it,
+with its character count, followed by the files to upload and the answers to the store's
+questions. docs/LISTING.md stays the single source of the copy.
+"""
+import os
+import re
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LISTING = os.path.join(ROOT, 'docs', 'LISTING.md')
+STORE = os.path.join(ROOT, 'stores')
+SUPPORT = 'https://<your web site>/SecretTomb-Support.html  (upload ~/Downloads/SecretTomb-Support.html)'
+PRIVACY = 'https://<your web site>/SecretTomb-Support.html#privacy'
+LANG_NAMES = {'en': ('English', 'English (U.K.)', 'en-GB', 'en-gb'), 'fr': ('French', 'French', 'fr-FR', 'fr-fr')}
+
+FIELD = re.compile(r'\*\*([^*]+)\*\* \((\d+) max[^)]*\)\n```\n(.*?)\n```', re.S)
+
+
+def sections(text):
+    """{store heading: {'English'|'Français': [(label, limit, body)]}}"""
+    stores = {}
+    for block in re.split(r'\n## ', text)[1:]:
+        title, _, rest = block.partition('\n')
+        langs = {}
+        for part in re.split(r'\n### ', '\n' + rest)[1:]:
+            lang, _, body = part.partition('\n')
+            langs[lang.strip()] = [(m.group(1), int(m.group(2)), m.group(3)) for m in FIELD.finditer(body)]
+        stores[title.strip()] = langs
+    return stores
+
+
+def heading(title, ch='='):
+    return f'{title}\n{ch * len(title)}\n'
+
+
+def field(label, limit, body, per_line=False):
+    count = f'longest line {max(map(len, body.splitlines()))}/{limit}' if per_line else f'{len(body)}/{limit} characters'
+    return f'{heading(f"{label.upper()}  ({count})", "-")}{body}\n\n'
+
+
+def files(lines):
+    return heading('FILES TO UPLOAD', '-') + '\n'.join(f'- {l}' for l in lines) + '\n\n'
+
+
+def answers(rows):
+    width = max(len(k) for k, _ in rows)
+    return heading('ANSWERS IN THE CONSOLE', '-') + '\n'.join(f'{k.ljust(width)}  {v}' for k, v in rows) + '\n\n'
+
+
+def write(lang, store, text):
+    path = os.path.join(STORE, lang, store, 'UPLOAD.txt')
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w') as f:
+        f.write(text)
+    print(os.path.relpath(path, ROOT))
+
+
+def main():
+    full_text = open(LISTING).read()
+    s = sections(full_text)
+    ios = s['Apple App Store (iPhone and iPad)']
+    mac = s['Mac App Store']
+    play = s['Google Play']
+    ms = s['Microsoft Store']
+    labels_ios = ['Name', 'Subtitle', 'Promotional text', 'Keywords', 'Description', "What's new"]
+
+    for lang, key in (('en', 'English'), ('fr', 'Français')):
+        name, asc_lang, play_lang, ms_lang = LANG_NAMES[lang]
+        d = f'stores/{lang}'
+        app_info = [
+            ('Bundle ID', 'uk.co.allthejohnsons.secrettomb'),
+            ('SKU', 'secrettomb'),
+            ('Primary language', 'English (U.K.); add French as a localisation'),
+            ('Category', 'Games > Adventure (secondary: Games > Action)'),
+            ('Age rating', 'Infrequent/Mild Cartoon or Fantasy Violence and Infrequent/Mild Horror/Fear Themes; everything else None (gives 9+)'),
+            ('Price', 'Free (or your choice); no in-app purchases'),
+            ('Support URL', SUPPORT),
+            ('Privacy Policy URL', PRIVACY),
+            ('Copyright', '2026 Paul F. Johnson'),
+            ('App Privacy', 'Data Not Collected'),
+            ('Encryption', 'None (ITSAppUsesNonExemptEncryption is already false in Info.plist)'),
+            ('Sign-in required', 'No'),
+            ('Review notes', 'Offline single-player game; no account needed. A remake of the 1985 Oric game Le Secret du Tombeau. Easy difficulty (on the menu) gives five lives.'),
+        ]
+
+        # ---------------- App Store (iOS)
+        fields = ios[key]
+        t = heading(f'THE SECRET OF THE TOMB - APP STORE (IPHONE AND IPAD) - {name.upper()}')
+        t += f'App Store Connect > The Secret of the Tomb > iOS App > 1.0 > {asc_lang}\n\n'
+        for label, (_, limit, body) in zip(labels_ios, fields):
+            t += field(label, limit, body)
+        t += files([
+            f'iPhone 6.9" screenshots (10): {d}/app-store/iphone-6.9in-2868x1320/',
+            f'iPhone 6.5" screenshots (10, if asked): {d}/app-store/iphone-6.5in-2688x1242/',
+            f'iPad 13" screenshots (10): {d}/app-store/ipad-13in-2752x2064/',
+            f'iPhone app preview: {d}/app-store/app-preview-iphone-1920x886.mp4 (poster frame: about 0:12)',
+            f'iPad app preview: {d}/app-store/app-preview-ipad-1600x1200.mp4',
+            'App icon: comes from the build (stores/en/app-store/icon-1024.png is the same picture)',
+            'Build: release/ios/SecretTomb.ipa (upload with Transporter; version 1.0.0, build 1)',
+        ])
+        if lang == 'en':
+            t += answers(app_info)
+        else:
+            t += 'App information, pricing and privacy answers: see stores/en/app-store/UPLOAD.txt (they are set once, for every language).\n'
+        write(lang, 'app-store', t)
+
+        # ---------------- Mac App Store
+        t = heading(f'THE SECRET OF THE TOMB - MAC APP STORE - {name.upper()}')
+        t += f'App Store Connect > The Secret of the Tomb > macOS App > 1.0 > {asc_lang}\n'
+        t += 'Name, subtitle, promotional text and keywords are the same as on iOS.\n\n'
+        for label, (_, limit, body) in zip(labels_ios, fields):
+            if label in ('Description', "What's new"):
+                continue
+            t += field(label, limit, body)
+        _, limit, body = mac[key][0]
+        t += field('Description', limit, body)
+        t += field("What's new", fields[5][1], fields[5][2])
+        t += files([
+            f'Screenshots (10): {d}/mac-app-store/screenshots-2880x1800/ (or screenshots-1440x900/)',
+            f'App preview: {d}/mac-app-store/app-preview-1920x1080.mp4',
+            'Build: release/macos/SecretTomb.pkg (upload with Transporter; version 1.0.0, build 1)',
+        ])
+        if lang == 'en':
+            t += answers([r for r in app_info if r[0] != 'Age rating'] +
+                         [('Age rating', 'Same answers as iOS (9+)'), ('Minimum macOS', '12.0; universal (Apple silicon and Intel)')])
+        else:
+            t += 'App information, pricing and privacy answers: see stores/en/mac-app-store/UPLOAD.txt.\n'
+        write(lang, 'mac-app-store', t)
+
+        # ---------------- Google Play
+        t = heading(f'THE SECRET OF THE TOMB - GOOGLE PLAY - {name.upper()}')
+        t += f'Play Console > The Secret of the Tomb > Grow > Store presence > Main store listing > {play_lang}\n\n'
+        for label, (_, limit, body) in zip(['App name', 'Short description', 'Full description'], play[key]):
+            t += field(label, limit, body)
+        t += files([
+            f'App icon: {d}/google-play/icon-512.png',
+            f'Feature graphic: {d}/google-play/feature-graphic-1024x500.png',
+            f'Phone screenshots (8): {d}/google-play/phone-screenshots-1920x1080/',
+            f'10-inch tablet screenshots (8): {d}/google-play/tablet-screenshots-2560x1600/ (also fine for 7-inch)',
+            'App bundle: releases/android/uk.co.allthejohnsons.secrettomb-Signed.aab (version 1.0.0, code 1)',
+        ])
+        if lang == 'en':
+            t += answers([
+                ('Package name', 'uk.co.allthejohnsons.secrettomb'),
+                ('App or game', 'Game; category Adventure'),
+                ('Free or paid', 'Free'),
+                ('Default language', 'English (United Kingdom) en-GB; add French (France) fr-FR'),
+                ('App signing', 'Let Google manage the app signing key; this upload key: ~/keys/secrettomb-upload.jks'),
+                ('Privacy policy', PRIVACY),
+                ('App access', 'All functionality available without special access'),
+                ('Ads', 'No ads'),
+                ('Content rating (IARC)', 'Game; fantasy violence (a laser against monsters: ghouls, armoured guardians, piranhas); no blood; mild horror/fear: yes'),
+                ('Target audience', '13 and over (or include younger ages if you prefer; nothing is collected)'),
+                ('Data safety', 'No data collected; no data shared'),
+                ('Government / financial / health', 'No'),
+                ('Contact email', 'paul@all-the-johnsons.co.uk'),
+                ('Website', SUPPORT),
+            ])
+        else:
+            t += 'App content answers (privacy, ads, rating, data safety): see stores/en/google-play/UPLOAD.txt.\n'
+        write(lang, 'google-play', t)
+
+        # ---------------- Microsoft Store (Partner Center needs every part below, every time)
+        t = heading(f'THE SECRET OF THE TOMB - MICROSOFT STORE - {name.upper()}')
+        t += f'Partner Center > The Secret of the Tomb > Submission > Store listings > {ms_lang}\n\n'
+        ms_labels = ['Product name', 'Short description', 'Description', 'Product features (one per box)',
+                     'Search terms (one per box)', "What's new in this version", 'Notes for certification']
+        for label, (_, limit, body) in zip(ms_labels, ms[key]):
+            per_box = 'one per box' in label
+            t += field(label, 200 if label.startswith('Product features') else 30 if per_box else limit, body, per_line=per_box)
+        t += field('Short title', 50, 'Secret of the Tomb' if lang == 'en' else 'Secret du Tombeau')
+        t += files([
+            f'Screenshots (10): {d}/microsoft-store/screenshots-3840x2160/ (or 1920x1080 / 1366x768)',
+            f'16:9 Super hero art (no text): {d}/microsoft-store/super-hero-art-3840x2160.png (also 1920x1080)',
+            f'1:1 Box art: {d}/microsoft-store/box-art-2160x2160.png',
+            f'2:3 Poster art: {d}/microsoft-store/poster-art-1440x2160.png',
+            f'App tile icon: {d}/microsoft-store/store-logo-300x300.png',
+            f'Xbox branded key art (with title): {d}/microsoft-store/xbox/branded-key-art-584x800.png',
+            f'Xbox titled hero art (with title): {d}/microsoft-store/xbox/titled-hero-art-3840x2160.png (also 1920x1080)',
+            f'Xbox featured promotional square art (no title): {d}/microsoft-store/xbox/featured-promotional-square-art-2160x2160.png (also 1080x1080)',
+            'Packages: releases/windows/SecretTomb-1.0.0-x64.msix and SecretTomb-1.0.0-arm64.msix',
+        ])
+        if lang == 'en':
+            justification = re.search(r'Paste:\n```\n(.*?)\n```', full_text, re.S).group(1)
+            t += heading('RESTRICTED CAPABILITIES', '-')
+            t += 'Submission options > "Why does your app need these capabilities?" (runFullTrust is the only one declared):\n\n'
+            t += justification + '\n\n'
+            t += answers([
+                ('Package identity', '49556nodoid.TheSecretoftheTomb'),
+                ('Category', 'Games > Adventure'),
+                ('Pricing', 'Free; no in-app purchases'),
+                ('Age ratings', 'IARC questionnaire: same answers as Google Play (mild fantasy violence and horror; no blood, gambling or user interaction)'),
+                ('Privacy policy URL', PRIVACY),
+                ('Website', SUPPORT),
+                ('Support contact', 'paul@all-the-johnsons.co.uk'),
+                ('Input', 'Keyboard, mouse and game controller'),
+                ('Display', 'Windowed and full screen; landscape'),
+                ('Languages', 'en-gb and fr-fr (as declared in the package manifest)'),
+            ])
+        else:
+            t += 'Restricted capability justification, properties, pricing and age rating answers: see stores/en/microsoft-store/UPLOAD.txt.\n'
+        write(lang, 'microsoft-store', t)
+
+
+if __name__ == '__main__':
+    main()

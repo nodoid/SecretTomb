@@ -1,6 +1,6 @@
 #!/bin/zsh
 # Records every store capture with the macOS (DesktopGL) build into <dir> (default: a temporary
-# folder), then builds the store assets in store/ and the app preview videos (also copied to ~/Movies).
+# folder), then builds the store assets in stores/ and the app preview videos (also copied to ~/Movies).
 #
 #   tools/capture_all.sh [dir] [stills]     ("stills" skips the videos)
 #

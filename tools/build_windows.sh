@@ -37,13 +37,13 @@ prlctl exec "$VM" --current-user powershell -NoProfile -Command "
 "
 
 if [[ ${1:-} == capture ]]; then
-  prlctl exec "$VM" --current-user powershell -NoProfile -Command "
-    Remove-Item -Recurse -Force C:\Build\cap -ErrorAction SilentlyContinue
-    foreach (\$l in 'en','fr') {
-      Start-Process -Wait -FilePath C:\Build\out\arm64\SecretTomb.exe -ArgumentList '--capture',('C:\Build\cap\' + \$l),'stills','--lang',\$l
-    }
-    Copy-Item -Recurse -Force C:\Build\cap $WSTAGE\capture
-  "
+  # One language per call: a single long-running call can lose Parallels' job status.
+  prlctl exec "$VM" --current-user powershell -NoProfile -Command "Remove-Item -Recurse -Force C:\Build\cap -ErrorAction SilentlyContinue"
+  for l in en fr; do
+    prlctl exec "$VM" --current-user powershell -NoProfile -Command \
+      "Start-Process -Wait -FilePath C:\Build\out\arm64\SecretTomb.exe -ArgumentList '--capture','C:\Build\cap\\$l','stills','--lang','$l'"
+  done
+  prlctl exec "$VM" --current-user powershell -NoProfile -Command "Copy-Item -Recurse -Force C:\Build\cap $WSTAGE\capture"
 fi
 
 rm -rf $out && mkdir -p $out
