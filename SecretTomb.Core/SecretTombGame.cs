@@ -74,6 +74,12 @@ public class SecretTombGame : Game
     protected override void Initialize()
     {
         Window.Title = "The Secret of the Tomb - Le Secret du Tombeau";
+        if (Capture != null)
+        {
+            // Captures run flat out, and must not wait for the display (a hidden window never refreshes).
+            _graphics.SynchronizeWithVerticalRetrace = false;
+            _graphics.ApplyChanges();
+        }
         if (!IsMobile)
         {
             Window.AllowUserResizing = true;
