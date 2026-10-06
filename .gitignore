@@ -1,0 +1,68 @@
+# Build output
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+**/bin/
+**/obj/
+
+# Store listings, screenshots, graphics and videos (generated locally by tools/, not versioned)
+stores/
+store/
+
+# Release builds (built locally by tools/, not versioned)
+releases/
+release/
+
+# IDE / user files
+.idea/
+.vs/
+.vscode/
+*.user
+*.suo
+*.userprefs
+*.DotSettings.user
+
+# Packaging output
+artifacts/
+AppPackages/
+*.msix
+*.appx
+*.apk
+*.aab
+*.ipa
+*.pkg
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Test results
+TestResults/
+*.trx
+
+# Signing keys, certificates and provisioning profiles (never commit)
+keys/
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+*.cer
+*.mobileprovision
+*.provisionprofile
+*.p8
+.env
+*.env
+
+# Videos live in stores/ and ~/Movies, not in the repository
+*.mp4
+*.mov
+*.m4v
+
+# Generated icon sets
+art/*.iconset/
+
+# Claude Code session files
+.claude/
