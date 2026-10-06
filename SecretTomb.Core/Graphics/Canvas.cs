@@ -34,6 +34,9 @@ public sealed class Canvas : IDisposable
     /// <summary>Font glyphs are smoothed to this many texels per pixel (Scale2x twice).</summary>
     public const int FontDetail = 4;
 
+    /// <summary>Clear texels around each glyph in the font textures, so scaled text never picks up its neighbours.</summary>
+    private const int FontPad = 2;
+
     private readonly GraphicsDevice _device;
     private readonly SpriteBatch _batch;
     private readonly Texture2D _pixel;
@@ -288,8 +291,8 @@ public sealed class Canvas : IDisposable
             int index = OricFont.IndexOf(text[i]);
             if (index == 0)
                 continue;
-            var src = new Rectangle(index * OricFont.GlyphWidth * FontDetail, 0, OricFont.GlyphWidth * FontDetail,
-                OricFont.GlyphHeight * FontDetail);
+            var src = new Rectangle(index * (OricFont.GlyphWidth * FontDetail + FontPad * 2) + FontPad, FontPad,
+                OricFont.GlyphWidth * FontDetail, OricFont.GlyphHeight * FontDetail);
             _batch.Draw(_font, Dev(x + i * gw, y), src, ink, 0f, Vector2.Zero, size, SpriteEffects.None, 0f);
         }
     }
@@ -333,7 +336,8 @@ public sealed class Canvas : IDisposable
             int index = Glyphs.IndexOf(ch);
             if (index >= 0)
             {
-                var src = new Rectangle(index * Glyphs.Size * FontDetail, 0, Glyphs.Size * FontDetail, Glyphs.Size * FontDetail);
+                var src = new Rectangle(index * (Glyphs.Size * FontDetail + FontPad * 2) + FontPad, FontPad,
+                    Glyphs.Size * FontDetail, Glyphs.Size * FontDetail);
                 _batch.Draw(_glyphs, Dev(x + col * gw, y), src, ink, 0f, Vector2.Zero, size, SpriteEffects.None, 0f);
             }
             col++;
@@ -390,8 +394,9 @@ public sealed class Canvas : IDisposable
         int cw = count == Glyphs.Count ? Glyphs.Size : OricFont.GlyphWidth;
         int ch = count == Glyphs.Count ? Glyphs.Size : OricFont.GlyphHeight;
         int gw = cw * FontDetail, gh = ch * FontDetail;
-        int w = count * gw;
-        var data = new Color[w * gh];
+        int cell = gw + FontPad * 2, th = gh + FontPad * 2;
+        int w = count * cell;
+        var data = new Color[w * th];
         for (int g = 0; g < count; g++)
         {
             var rows = glyph(g);
@@ -404,9 +409,9 @@ public sealed class Canvas : IDisposable
             for (int y = 0; y < bh; y++)
                 for (int x = 0; x < bw; x++)
                     if (big[y * bw + x] != 0)
-                        data[y * w + g * gw + x] = Color.White;
+                        data[(y + FontPad) * w + g * cell + FontPad + x] = Color.White;
         }
-        var tex = new Texture2D(device, w, gh);
+        var tex = new Texture2D(device, w, th);
         tex.SetData(data);
         return tex;
     }
