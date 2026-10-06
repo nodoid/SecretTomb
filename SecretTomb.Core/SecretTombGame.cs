@@ -108,6 +108,11 @@ public class SecretTombGame : Game
         HighScores.Load();
         _scene = new TitleScene(this);
         _scene.Enter();
+#if DEBUG
+        // Development only: SECRETTOMB_START=play opens straight into a game (simulators, emulators).
+        if (Environment.GetEnvironmentVariable("SECRETTOMB_START") == "play")
+            StartNewGame();
+#endif
     }
 
     protected override void UnloadContent()
