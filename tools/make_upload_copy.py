@@ -190,7 +190,7 @@ def main():
             t += 'Submission options > "Why does your app need these capabilities?" (runFullTrust is the only one declared):\n\n'
             t += justification + '\n\n'
             t += answers([
-                ('Package identity', '49556nodoid.TheSecretoftheTomb'),
+                ('Package identity', '49556nodoid.SecretTomb'),
                 ('Category', 'Games > Adventure'),
                 ('Pricing', 'Free; no in-app purchases'),
                 ('Age ratings', 'IARC questionnaire: same answers as Google Play (mild fantasy violence and horror; no blood, gambling or user interaction)'),

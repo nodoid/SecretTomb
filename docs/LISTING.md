@@ -19,7 +19,7 @@ Everything to paste into App Store Connect (iOS and Mac), Google Play Console an
 | Bundle ID (iOS, macOS) | `uk.co.allthejohnsons.secrettomb` |
 | Package name (Android) | `uk.co.allthejohnsons.secrettomb` |
 | Android upload key | `~/keys/secrettomb-upload.jks`, alias `secrettomb`, password in Keychain ("SecretTomb Android upload keystore"); SHA-256 `67:93:C8:E2:EE:28:AD:1B:4C:81:D9:78:47:E1:BF:D6:CB:57:13:A1:6C:A8:69:4C:D2:EA:EF:ED:C7:16:3D:1A` |
-| Windows package identity | `49556nodoid.TheSecretoftheTomb`, publisher `CN=A6EAEB04-6634-41C1-BDFE-695819ECE444` |
+| Windows package identity | `49556nodoid.SecretTomb`, publisher `CN=A6EAEB04-6634-41C1-BDFE-695819ECE444` |
 | Provisioning profiles | iOS `rel-secrettomb` (App Store), `devel-secrettomb`; macOS `rel-secrettomb-mac` (App Store), `devel-secrettomb-mac` |
 | Developer / seller | Paul F. Johnson |
 | Category | Games, then Adventure (secondary: Action) |

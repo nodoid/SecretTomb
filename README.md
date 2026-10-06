@@ -56,7 +56,7 @@ sessions.
 
 Identifiers:
 - Bundle ID (iOS and macOS) and Android package: `uk.co.allthejohnsons.secrettomb`
-- Windows identity: `49556nodoid.TheSecretoftheTomb`
+- Windows identity: `49556nodoid.SecretTomb`
 - Profiles (read from `~/Downloads`, never committed): iOS `rel-secrettomb` / `devel-secrettomb`,
   macOS `relsecrettombmac.provisionprofile` / `develsecrettombmac.provisionprofile`
 - Android upload key: `~/keys/secrettomb-upload.jks` (password in the Keychain)

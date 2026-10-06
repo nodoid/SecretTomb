@@ -7,7 +7,7 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity Name="49556nodoid.TheSecretoftheTomb"
+  <Identity Name="49556nodoid.SecretTomb"
             Publisher="CN=A6EAEB04-6634-41C1-BDFE-695819ECE444"
             Version="$(VERSION)"
             ProcessorArchitecture="$(ARCH)" />
